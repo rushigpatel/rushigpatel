@@ -1,0 +1,52 @@
+from flask import Flask, render_template, request
+
+app = Flask(__name__)
+
+# Home Page
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+# User Registration
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        # Handle user registration logic
+        username = request.form['username']
+        password = request.form['password']
+        # Save user details to the database
+        # Redirect user to their profile page
+        return render_template('profile.html', username=username)
+    return render_template('register.html')
+
+# User Login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Handle user login logic
+        username = request.form['username']
+        password = request.form['password']
+        # Check username and password in the database
+        # If valid, redirect user to their profile page
+        return render_template('profile.html', username=username)
+    return render_template('login.html')
+
+# User Profile
+@app.route('/profile/<username>')
+def profile(username):
+    # Fetch user details from the database
+    # Fetch user posts, stories, and other relevant information
+    return render_template('profile.html', username=username)
+
+# Post Creation
+@app.route('/create_post', methods=['GET', 'POST'])
+def create_post():
+    if request.method == 'POST':
+        # Handle post creation logic
+        # Save the post details to the database
+        return render_template('post_created.html')
+    return render_template('create_post.html')
+
+# Run the application
+if __name__ == '__main__':
+    app.run(debug=True)
